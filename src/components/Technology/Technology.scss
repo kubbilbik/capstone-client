@@ -1,0 +1,11 @@
+.tech-img{
+    width: 3rem;
+}
+
+.technology{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    flex: 0 0 calc( 3 * 223 / 1080 * 100vh);
+    height: calc( 9 / 9 * 100vh);
+}

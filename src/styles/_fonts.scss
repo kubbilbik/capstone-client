@@ -1,0 +1,14 @@
+$font-weight-semi-bold: 600;
+$font-weight-regular: 400;
+
+@font-face {
+  font-family: "Titillium Web";
+  src: url("../assets/fonts/TitilliumWeb-Regular.ttf");
+  font-weight: $font-weight-regular;
+}
+
+@font-face {
+  font-family: "Titillium Web";
+  src: url("../assets/fonts/TitilliumWeb-SemiBold.ttf");
+  font-weight: $font-weight-semi-bold;
+}
