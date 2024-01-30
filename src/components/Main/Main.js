@@ -11,7 +11,9 @@ export default function Main({ formData }) {
     const linkedin = formData && formData.linkedin ? formData.linkedin : "null";
     const git = formData && formData.git ? formData.git : "null";
     const description = formData && formData.description ? formData.description : "null";
-    const imageSrc = formData && formData.image ? URL.createObjectURL(formData.image) : Picture;
+    const imageSrc = formData && formData.image && (formData.image instanceof Blob || formData.image instanceof File) 
+                    ? URL.createObjectURL(formData.image) 
+                    : Picture;
 
 
 
