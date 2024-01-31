@@ -74,6 +74,9 @@ export default function Technology({ formData }) {
                 <div className='technology-images'>
                     {renderSelectedTechImages()}
                 </div>
+                <div className='technology-title'>
+                    <h3 className='technology-title-abt'>What Technologies Do I Use?</h3>
+                </div>
             </div>
         </>
     )

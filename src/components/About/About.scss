@@ -7,6 +7,13 @@
     border-right: 1px solid black;
     padding: 1rem 2rem;
 
+    &-title-abt{
+        font-weight: 400;
+        font-size: 1rem;
+        line-height: .93em;
+        writing-mode: vertical-rl;
+    }
+
     &-bday{
         font-size: 6rem;
         white-space: nowrap;

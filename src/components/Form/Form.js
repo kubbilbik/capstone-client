@@ -11,8 +11,6 @@ export default function Form({ onFormSubmit }){
     const [formData, setFormData] = useState({
     name: '',
     birthday: '',
-    city1:'',
-    city2:'',
     description:'',
     email:'',
     linkedin:'',
@@ -54,13 +52,14 @@ export default function Form({ onFormSubmit }){
           const technologies = checked
               ? [...prevData.technologies, value]
               : prevData.technologies.filter((tech) => tech !== value);
-
+    
           return {
               ...prevData,
               technologies,
           };
       });
     };
+    
 
 
 
@@ -92,8 +91,14 @@ export default function Form({ onFormSubmit }){
         event.preventDefault();
         const formDataToSend = new FormData();
         Object.entries(formData).forEach(([key, value]) => {
-          formDataToSend.append(key, value);
-        });
+          if (key === 'technologies') {
+            value.forEach(technology => {
+              formDataToSend.append('technologies', technology);
+            });
+          } else {
+            formDataToSend.append(key, value);
+          }
+      });
       
         try {
           const response = await fetch('http://localhost:3001/submit-form', {
@@ -146,32 +151,6 @@ export default function Form({ onFormSubmit }){
             onChange={handleChange} 
             required 
           />
-        </div>,
-
-        <div className="form__input">
-            <h4 className="form__input-label" htmlFor="title-input">Where Are You From?</h4>
-            <input 
-            className="form__input-text" 
-            id="city1" 
-            type="text" 
-            name="city1" 
-            value={formData.city1} 
-            onChange={handleChange} 
-            required 
-            />
-        </div>,
-        
-        <div className="form__input">
-        <h4 className="form__input-label" htmlFor="title-input">Where Do You Live?</h4>
-        <input 
-          className="form__input-text" 
-          id="city2" 
-          type="text" 
-          name="city2" 
-          value={formData.city2} 
-          onChange={handleChange} 
-          required 
-        />
         </div>,
 
         <div className="form__input">

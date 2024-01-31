@@ -11,7 +11,7 @@ export default function About({ formData }){
         <>
             <div className='about'>
                 <div className='about-title'>
-                    <h3 className='about-title-abt'>About</h3>
+                    <h3 className='about-title-abt'>About Me</h3>
                 </div>
                 <div className='about-container'>
                     {birthdayParts.map((part, index) => (
