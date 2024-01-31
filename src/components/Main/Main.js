@@ -1,5 +1,6 @@
 import './Main.scss';
 import Picture from '../../assets/images/kb.png'; 
+import Line from '../Line/Line.js'; 
 
 import React from 'react';
 
@@ -15,13 +16,15 @@ export default function Main({ formData }) {
                     ? URL.createObjectURL(formData.image) 
                     : Picture;
 
-
+           
 
     return (
         <>
             <div className='main'>
                 <div className='main-city'>
                     <h2 className='main-city-first'>{city1}</h2>
+                    <Line />
+
                     <h2 className='main-city-second'>{city2}</h2>
                 </div>
                 <div className='main-container'>

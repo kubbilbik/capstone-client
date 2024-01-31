@@ -1,8 +1,12 @@
 import './About.scss';
+import React from 'react';
+
 
 export default function About({ formData }){
-    const birthday = formData && formData.birthday ? formData.birthday : "Belirtilmemiş";
+    const birthday = formData && formData.birthday ? formData.birthday : "null";
 
+    const birthdayParts = birthday.split('.');
+    
     return(
         <>
             <div className='about'>
@@ -10,7 +14,12 @@ export default function About({ formData }){
                     <h3 className='about-title-abt'>About</h3>
                 </div>
                 <div className='about-container'>
-                    <h1 className='about-bday'>{birthday}</h1>
+                    {birthdayParts.map((part, index) => (
+                    <React.Fragment key={index}>
+                        <span className='about-bday'>{part}.</span>
+                        {index < birthdayParts.length - 1 && <br />}
+                    </React.Fragment>
+                    ))}
                     <p className='about-message'>Thank you, mom&dad, for ushering me into this somber world.</p>
                 </div>
             </div>

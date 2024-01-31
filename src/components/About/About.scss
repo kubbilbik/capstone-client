@@ -1,8 +1,17 @@
-
 .about{
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     flex: 0 0 calc( 3 * 223 / 1080 * 100vh);
     height: calc( 9 / 9 * 100vh);
+    border-right: 1px solid black;
+    padding: 1rem 2rem;
+
+    &-bday{
+        font-size: 6rem;
+        white-space: nowrap;
+        overflow: hidden; 
+        text-overflow: ellipsis; 
+        max-width: 100%;
+    }
 }

@@ -10,14 +10,15 @@ import Technology from "../../components/Technology/Technology";
 
 export default function MainPage(){
     const location = useLocation();
-    const formData = location.state?.formData; 
-
+    const formData = location.state?.formData;
+    console.log(formData)
    
     console.log("FormData in MainPage:", formData);
 
     return(
         <>
             <div className="horizontal-scroll-container">
+                
                 <About formData={formData} />
                 <Main formData={formData} />
                 <VisitorNotes />
