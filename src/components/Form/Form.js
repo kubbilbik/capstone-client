@@ -62,39 +62,47 @@ export default function Form({ onFormSubmit }){
     
 
 
-
-      const handleSubmit = async (event) => {
-        event.preventDefault();
-        const formDataToSend = new FormData();
-        Object.entries(formData).forEach(([key, value]) => {
-          if (key === 'technologies') {
-            value.forEach(technology => {
-              formDataToSend.append('technologies', technology);
-            });
-          } else {
-            formDataToSend.append(key, value);
-          }
-      });
-      
-        try {
-          const response = await fetch('http://localhost:3001/submit-form', {
-            method: 'POST',
-            body: formDataToSend, 
+    const handleSubmit = async (event) => {
+      event.preventDefault();
+    
+      const formDataToSend = new FormData();
+      Object.entries(formData).forEach(([key, value]) => {
+        if (key === 'technologies') {
+          value.forEach(technology => {
+            formDataToSend.append('technologies', technology);
           });
-      
-          if (response.ok) {
-            const data = await response.json();
-            navigate('/main', { state: { formData: data.formData } });
-          } else {
-            const errorText = await response.text();
-            console.error('Form submission failed:', errorText);
-          }
-        } catch (error) {
-          console.error('Form submission failed:', error);
+        } else if (key === 'image') {
+          formDataToSend.append('image', value);
+        } else {
+          formDataToSend.append(key, value.toString());
         }
-      };
-      
+      });
+    
+      try {
+        const formResponse = await fetch('http://localhost:3001/submit-form', {
+          method: 'POST',
+          body: formDataToSend, 
+        });
+    
+        if (formResponse.ok) {
+          const descriptionResponse = await fetch('http://localhost:3001/generate-description');
+          console.log(descriptionResponse)
+          if (descriptionResponse.ok) {
+            const descriptionData = await descriptionResponse.json();
 
+            setFormData({ ...formData, description: descriptionData.generatedDescription });
+            navigate('/main', { state: { formData: { ...formData, description: descriptionData.generatedDescription } } });
+          } else {
+            console.error('Error retrieving description');
+          }
+        } else {
+          console.error('Form submission failed');
+        }
+      } catch (error) {
+        console.error('Error:', error);
+      }
+    };
+    
 
     
 
