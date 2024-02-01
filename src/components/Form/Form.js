@@ -63,30 +63,6 @@ export default function Form({ onFormSubmit }){
 
 
 
-      // const handleSubmit = async (event) => {
-      //   event.preventDefault();
-      //   try {
-      //       const response = await fetch('http://localhost:3001/submit-form', {
-      //       method: 'POST',
-      //       headers: {
-      //           'Content-Type': 'application/json',
-      //       },
-      //       body: JSON.stringify(formData),
-      //     });
-      //     if (response.ok) {
-      //       const data = await response.json(); 
-      //       onFormSubmit(data); 
-      //       navigate('/main', { state: { formData: data } });
-      //     } else {
-      //       const errorText = await response.text(); 
-      //       console.error('Form submission failed:', errorText);
-      //     }
-      //   } catch (error) {
-      //     console.error('Form submission failed:', error);
-      //   }
-      // };
-      
-
       const handleSubmit = async (event) => {
         event.preventDefault();
         const formDataToSend = new FormData();
@@ -243,7 +219,7 @@ export default function Form({ onFormSubmit }){
                 {formSteps[step]}
                 <div className="form-actions">
                     {step < formSteps.length - 1 ? (
-                        <button type="button" onClick={nextStep}>Next</button>
+                        <button className="button-next" type="next" onClick={nextStep}>Next</button>
                     ) : (
                         <button type="submit" onClick={handleSubmit}>Submit</button>
                     )}

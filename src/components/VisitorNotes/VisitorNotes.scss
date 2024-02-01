@@ -17,6 +17,8 @@
     position: relative;
     display: flex;
     width: 100%;
+    border-top: 1px solid green;
+    margin-top: 2rem;
 }
 
 .input-area-text{
@@ -53,7 +55,7 @@
 
 .note{
     display: flex;
-    border: 1px solid green;
+    justify-content: flex-end;
     width: 150%;
 
 }

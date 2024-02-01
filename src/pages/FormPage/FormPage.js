@@ -3,7 +3,6 @@ import { useNavigate } from 'react-router-dom';
 
 import React from 'react';
 import Form from '../../components/Form/Form';
-import { ReactComponent as BackgroundSVG } from '../../assets/images/background.svg';
 
 
 
@@ -19,7 +18,6 @@ export default function FormPage(){
 
     return(
         <div className='page-form'>
-            <BackgroundSVG className="background-svg" />
             <Form onFormSubmit={handleFormSubmit} />
         </div>
         

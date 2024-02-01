@@ -14,6 +14,14 @@
         &-first{
         width: 53.6851851852vh;
         max-height: 44.4444444444vh;
+        display: flex;
+        align-items: flex-end;
+
+            &-about{
+                font-size: 1rem;
+                line-height: 0.99em;
+                color: rgba(0, 0, 0, 0.762);
+            }
 
         }
 

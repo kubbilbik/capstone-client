@@ -20,12 +20,19 @@
         flex-wrap: wrap;
     }
 
-    &-title-abt{
-      font-weight: 400;
-      font-size: 1rem;
-      line-height: .93em;
-      writing-mode: vertical-rl;
+    &-title{
+      display: flex;
+
+
+      &-abt{
+        font-weight: 400;
+        font-size: 1rem;
+        line-height: .93em;
+        writing-mode: vertical-rl;
+      }
     }
+    
+     
 }
 
 

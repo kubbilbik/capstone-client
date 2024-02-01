@@ -80,3 +80,73 @@
   display: flex;
   flex-direction: column;
 }
+
+
+.button-next{
+  display: inline-block;
+	position: relative;
+	z-index: 1;
+  width: 5rem;
+
+	overflow: if(false, unset, hidden);
+	
+	text-decoration: none;
+	
+	font-family: sans-serif;
+	font-weight: 400;
+	font-size: 1em;
+	
+	
+  color: rgb(62, 95, 58);
+	
+	border: 0.1em solid #3e5f3a;
+  ;
+	border-radius: calc(0.75em + 0.5em + 0.15em);
+	
+	transition: 4s;
+	
+	&:before,
+	&:after {
+		content: '';
+		position: absolute;
+		top: -1.5em;
+		
+		z-index: -1;
+		width: 200%;
+		aspect-ratio: 1;
+		
+		border: if(false, inherit, none);
+		border-radius: 10%;
+		
+		background-color: rgba(#3e5f3a, 0.25);
+		
+		transition: 4s;
+	}
+	
+	&:before {
+		left: -80%;
+		transform: translate3d(0, 5em, 0) rotate(-340deg);
+	}
+	
+	&:after {
+		right: -80%;
+		transform: translate3d(0, 5em, 0) rotate(390deg);
+	}
+	
+	&:hover,
+	&:focus {
+		color: white;
+		
+		&:before,
+		&:after {
+			transform: none;
+			background-color: rgba(#3e5f3a, 0.75);
+		}
+	}
+}
+
+.form-actions{
+  display: flex;
+  justify-content: flex-end;
+  padding-right: 1rem;
+}
