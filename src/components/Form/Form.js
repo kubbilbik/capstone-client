@@ -58,54 +58,69 @@ export default function Form({ onFormSubmit }){
               technologies,
           };
       });
-    };
-    
+   };
 
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState('');
 
-    const handleSubmit = async (event) => {
+      const handleSubmit = async (event) => {
       event.preventDefault();
-    
+  
+      setLoading(true);
+      setError('');
+  
       const formDataToSend = new FormData();
       Object.entries(formData).forEach(([key, value]) => {
         if (key === 'technologies') {
           value.forEach(technology => {
             formDataToSend.append('technologies', technology);
           });
-        } else if (key === 'image') {
+        } else if (key === 'image' && value) {
           formDataToSend.append('image', value);
         } else {
           formDataToSend.append(key, value.toString());
         }
       });
-    
+  
       try {
         const formResponse = await fetch('http://localhost:3001/submit-form', {
           method: 'POST',
-          body: formDataToSend, 
+          body: formDataToSend,
         });
-    
+  
         if (formResponse.ok) {
-          const descriptionResponse = await fetch('http://localhost:3001/generate-description');
-          console.log(descriptionResponse)
-          if (descriptionResponse.ok) {
-            const descriptionData = await descriptionResponse.json();
-
-            setFormData({ ...formData, description: descriptionData.generatedDescription });
-            navigate('/main', { state: { formData: { ...formData, description: descriptionData.generatedDescription } } });
-          } else {
-            console.error('Error retrieving description');
-          }
+          // Form submission succeeded, wait for a bit before fetching the description
+          setTimeout(async () => {
+            try {
+              const descriptionResponse = await fetch('http://localhost:3001/generate-description');
+              if (descriptionResponse.ok) {
+                const descriptionData = await descriptionResponse.json();
+                setFormData(prev => ({ ...prev, description: descriptionData.generatedDescription }));
+                navigate('/main', { state: { formData: { ...formData, description: descriptionData.generatedDescription } } });
+              } else {
+                console.error('Error retrieving description');
+                setError('Error retrieving description.');
+              }
+            } catch (error) {
+              console.error('Error:', error);
+              setError('An error occurred while fetching the description.');
+            } finally {
+              setLoading(false);
+            }
+          }, 3000); // Wait for 1 second
         } else {
           console.error('Form submission failed');
+          setError('Form submission failed.');
+          setLoading(false);
         }
       } catch (error) {
         console.error('Error:', error);
+        setError('An unexpected error occurred.');
+        setLoading(false);
       }
     };
-    
-
-    
-
+  
+  
 
 
 
@@ -223,6 +238,8 @@ export default function Form({ onFormSubmit }){
 
     return(
         <div className="form">
+          {loading && <p>Loading...</p>}
+      {error && <p>Error: {error}</p>}
             <form className="form__upload" onSubmit={(e) => e.preventDefault()}>
                 {formSteps[step]}
                 <div className="form-actions">
@@ -235,4 +252,4 @@ export default function Form({ onFormSubmit }){
             </form>
         </div>       
     )
-}
+                    }
