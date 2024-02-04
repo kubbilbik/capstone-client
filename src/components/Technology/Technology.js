@@ -28,6 +28,12 @@ const techImages = {
     sass: sass,
 };
 
+Technology.defaultProps = {
+    formData: {
+      technologies: [], 
+    },
+  };
+  
 
 export default function Technology({ formData }) {
     const [time, setTime] = useState(new Date());
@@ -48,15 +54,21 @@ export default function Technology({ formData }) {
 
 
     const renderSelectedTechImages = () => {
-        const technologiesArray = Array.isArray(formData.technologies) 
-        ? formData.technologies 
-        : formData.technologies.split(',');
+        const technologiesArray = formData && formData.technologies
+        ? formData.technologies
+        : Technology.defaultProps.formData.technologies;
+
+        if (!formData || !formData.technologies) {
+            console.log("formData or formData.technologies is undefined.");
+            return null;
+        }
     
         return technologiesArray.map((tech) => {
           const imageSrc = techImages[tech];
           return imageSrc ? (
             <div key={tech} className="floating">
-              <img className='tech-img' src={imageSrc} alt={`Programming Language`} />
+              <img className='tech-img' src={imageSrc} alt={`${tech} programming language logo`}
+ />
             </div>
           ) : null;
         });

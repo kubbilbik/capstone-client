@@ -7,7 +7,7 @@ import Linkedin from '../../assets/images/linkedin.png';
 import GitHub from '../../assets/images/github.png';
 
 
-import React from 'react';
+import React, { useState ,useEffect } from 'react';
 
 
 export default function Main({ formData }) {
@@ -20,6 +20,66 @@ export default function Main({ formData }) {
                     ? URL.createObjectURL(formData.image) 
                     : Picture;
 
+    const [responseContent, setResponseContent] = useState('');
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState('');
+
+    useEffect(() => {
+        const fetchData = async () => {
+            setLoading(true);
+            setError('');
+            try {
+                const response = await fetch('http://localhost:3001/generate-description');
+                const contentType = response.headers.get('content-type');
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                } else if (!contentType || !contentType.includes('application/json')) {
+                    throw new Error('Response was not valid JSON');
+                }
+                const data = await response.json();
+                setResponseContent(data.content); 
+            } catch (error) {
+                setError(error.message);
+            } finally {
+                setLoading(false);
+            }
+        };
+    
+        fetchData();
+    }, []);
+    
+    
+    
+    useEffect(() => {
+    const apiResponse = {
+        "id": "",
+        "object": "",
+        "created": '',
+        "model": "",
+        "choices": [
+        {
+            "index": "",
+            "message": {
+            "role": "",
+            "content": ""
+            },
+            "logprobs": null,
+            "finish_reason": ""
+        }
+        ],
+        "usage": {
+        "prompt_tokens": "",
+        "completion_tokens": "",
+        "total_tokens": 267
+        },
+        "system_fingerprint": null
+    };
+
+    if (apiResponse.choices && apiResponse.choices.length > 0) {
+        const content = apiResponse.choices[0].message.content;
+        setResponseContent(content); 
+    }
+    }, []);
            
     return (
         <>
@@ -46,7 +106,7 @@ export default function Main({ formData }) {
                     
                     <div className='main-container-first'>
                         <p className='main-container-first-about'>
-                           {description}
+                           {responseContent}
                         </p>
                     </div>
                     <div className='main-container-second'>

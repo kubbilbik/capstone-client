@@ -23,6 +23,7 @@ export default function MainPage(){
                 <Main formData={formData} />
                 <VisitorNotes />
                 <Technology  formData={formData} />
+
             </div>
         </>
     )

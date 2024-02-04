@@ -2,33 +2,39 @@ import React, { useState } from 'react';
 import './Form.scss';
 import { useNavigate } from 'react-router-dom';
 
-
 export default function Form({ onFormSubmit }){
     const navigate = useNavigate();
-
-    const [step, setStep] = useState(0);
+    const [step, setStep] = useState(0); 
 
     const [formData, setFormData] = useState({
-    name: '',
-    birthday: '',
-    description:'',
-    email:'',
-    linkedin:'',
-    git:'',
-    image: null,
-    technologies: [], 
+      name: '',
+      birthday: '',
+      description:'',
+      email:'',
+      linkedin:'',
+      git:'',
+      image: null,
+      technologies: [], 
     });
+
+
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState('');
+
+
+
+    
 
     const programmingLanguages = [
       "C+", "C#", "JAVA", "JAVASCRIPT", "KOTLIN", "PHP", "REACT", "RUBY", "SASS", "SWIFT", "TYPESCRIPT"
     ];
 
     const nextStep = () => {
-        if (step < formSteps.length - 1) {
+      if (step < formSteps.length - 1) {
           setStep(step + 1);
-        } else {
+      } else {
           handleSubmit();
-        }
+      }
     };
 
     const handleChange = (e) => {
@@ -48,79 +54,84 @@ export default function Form({ onFormSubmit }){
 
     const handleCheckboxChange = (e) => {
       const { value, checked } = e.target;
-      setFormData((prevData) => {
-          const technologies = checked
+      setFormData(prevData => ({
+          ...prevData,
+          technologies: checked
               ? [...prevData.technologies, value]
-              : prevData.technologies.filter((tech) => tech !== value);
+              : prevData.technologies.filter(tech => tech !== value),
+      }));
+    };
+
+
+    const pollForDescription = async (maxAttempts = 5, interval = 5000) => {
+      for (let attempt = 1; attempt <= maxAttempts; attempt++) {
+        try {
+          const response = await fetch('http://localhost:3001/generate-description');
+          if (response.ok) {
+            const data = await response.json();
+            return data; 
+          }
+          await new Promise(resolve => setTimeout(resolve, interval));
+        } catch (error) {
+          console.error('Polling error:', error);
+        }
+      }
+      throw new Error('Description generation timeout');
+    };
     
-          return {
-              ...prevData,
-              technologies,
-          };
-      });
-   };
+const handleSubmit = async (event) => {
+  event.preventDefault();
+  setLoading(true);
+  setError('');
 
-    const [loading, setLoading] = useState(false);
-    const [error, setError] = useState('');
+  const formDataToSend = new FormData();
+  Object.keys(formData).forEach(key => {
+    if (key !== 'technologies' && key !== 'image') {
+      formDataToSend.append(key, formData[key]);
+    }
+  });
 
-      const handleSubmit = async (event) => {
-      event.preventDefault();
-  
-      setLoading(true);
-      setError('');
-  
-      const formDataToSend = new FormData();
-      Object.entries(formData).forEach(([key, value]) => {
-        if (key === 'technologies') {
-          value.forEach(technology => {
-            formDataToSend.append('technologies', technology);
-          });
-        } else if (key === 'image' && value) {
-          formDataToSend.append('image', value);
-        } else {
-          formDataToSend.append(key, value.toString());
-        }
-      });
-  
+  if (formData.technologies.length > 0) {
+    formDataToSend.append('technologies', formData.technologies.join(','));
+  }
+
+  if (formData.image) {
+    formDataToSend.append('image', formData.image);
+  }
+
+  try {
+    const formResponse = await fetch('http://localhost:3001/submit-form', {
+      method: 'POST',
+      body: formDataToSend, 
+    });
+
+    if (formResponse.ok) {
+      const responseJson = await formResponse.json();
+      console.log('Form submission successful', responseJson);
       try {
-        const formResponse = await fetch('http://localhost:3001/submit-form', {
+          const gptResponse = await fetch('http://localhost:3001/generate-description', {
           method: 'POST',
-          body: formDataToSend,
-        });
-  
-        if (formResponse.ok) {
-          // Form submission succeeded, wait for a bit before fetching the description
-          setTimeout(async () => {
-            try {
-              const descriptionResponse = await fetch('http://localhost:3001/generate-description');
-              if (descriptionResponse.ok) {
-                const descriptionData = await descriptionResponse.json();
-                setFormData(prev => ({ ...prev, description: descriptionData.generatedDescription }));
-                navigate('/main', { state: { formData: { ...formData, description: descriptionData.generatedDescription } } });
-              } else {
-                console.error('Error retrieving description');
-                setError('Error retrieving description.');
-              }
-            } catch (error) {
-              console.error('Error:', error);
-              setError('An error occurred while fetching the description.');
-            } finally {
-              setLoading(false);
-            }
-          }, 3000); // Wait for 1 second
-        } else {
-          console.error('Form submission failed');
-          setError('Form submission failed.');
-          setLoading(false);
-        }
+          body: formDataToSend.description,
+        })
       } catch (error) {
         console.error('Error:', error);
         setError('An unexpected error occurred.');
-        setLoading(false);
       }
-    };
-  
-  
+      navigate('/main', { state: { formData: formData } });
+    } else {
+      console.error('Form submission failed');
+      setError('Form submission failed.');
+    }
+  } catch (error) {
+    console.error('Error:', error);
+    setError('An unexpected error occurred.');
+  } finally {
+    setLoading(false);
+  }
+};
+
+    
+
 
 
 
@@ -236,20 +247,20 @@ export default function Form({ onFormSubmit }){
     ];
     
 
-    return(
-        <div className="form">
-          {loading && <p>Loading...</p>}
-      {error && <p>Error: {error}</p>}
-            <form className="form__upload" onSubmit={(e) => e.preventDefault()}>
+    return (
+      <div className="form">
+            {loading && <p>Loading...</p>}
+            {error && <p>Error: {error}</p>}
+            <form onSubmit={(e) => e.preventDefault()}>
                 {formSteps[step]}
                 <div className="form-actions">
                     {step < formSteps.length - 1 ? (
-                        <button className="button-next" type="next" onClick={nextStep}>Next</button>
+                        <button type="button" onClick={nextStep}>Next</button>
                     ) : (
-                        <button type="submit" onClick={handleSubmit}>Submit</button>
+                        <button type="button" onClick={handleSubmit}>Submit</button>
                     )}
                 </div>
             </form>
-        </div>       
-    )
-                    }
+        </div>
+  );
+}
