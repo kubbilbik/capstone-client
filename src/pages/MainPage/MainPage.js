@@ -22,7 +22,7 @@ export default function MainPage(){
                 <About formData={formData} />
                 <Main formData={formData} />
                 <VisitorNotes />
-                <Technology  formData={formData} />
+                    <Technology  formData={formData} />
 
             </div>
         </>

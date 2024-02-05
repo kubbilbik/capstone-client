@@ -26,7 +26,7 @@ export default function Form({ onFormSubmit }){
     
 
     const programmingLanguages = [
-      "C+", "C#", "JAVA", "JAVASCRIPT", "KOTLIN", "PHP", "REACT", "RUBY", "SASS", "SWIFT", "TYPESCRIPT"
+      "C+", "C#", "JAVA", "JAVASCRIPT", "KOTLIN", "PHP", "REACT", "RUBY", "SASS", "SWIFT", "TYPESCRIPT", "HTML", "CSS", "MONGODB", "NODEJS", "MYSQL"
     ];
 
     const nextStep = () => {
@@ -63,21 +63,21 @@ export default function Form({ onFormSubmit }){
     };
 
 
-    const pollForDescription = async (maxAttempts = 5, interval = 5000) => {
-      for (let attempt = 1; attempt <= maxAttempts; attempt++) {
-        try {
-          const response = await fetch('http://localhost:3001/generate-description');
-          if (response.ok) {
-            const data = await response.json();
-            return data; 
-          }
-          await new Promise(resolve => setTimeout(resolve, interval));
-        } catch (error) {
-          console.error('Polling error:', error);
-        }
-      }
-      throw new Error('Description generation timeout');
-    };
+    // const pollForDescription = async (maxAttempts = 5, interval = 5000) => {
+    //   for (let attempt = 1; attempt <= maxAttempts; attempt++) {
+    //     try {
+    //       const response = await fetch('http://localhost:3001/generate-description');
+    //       if (response.ok) {
+    //         const data = await response.json();
+    //         return data; 
+    //       }
+    //       await new Promise(resolve => setTimeout(resolve, interval));
+    //     } catch (error) {
+    //       console.error('Polling error:', error);
+    //     }
+    //   }
+    //   throw new Error('Description generation timeout');
+    // };
     
 const handleSubmit = async (event) => {
   event.preventDefault();
@@ -102,7 +102,7 @@ const handleSubmit = async (event) => {
   try {
     const formResponse = await fetch('http://localhost:3001/submit-form', {
       method: 'POST',
-      body: formDataToSend, 
+      body: formDataToSend, // FormData is directly usable with fetch to send multipart/form-data
     });
 
     if (formResponse.ok) {

@@ -6,13 +6,15 @@ import Form from '../../components/Form/Form';
 
 
 
-export default function FormPage(){
+export default function FormPage({ onFormSubmit }){
 
     const navigate = useNavigate();
 
     const handleFormSubmit = (formData) => {
+        onFormSubmit(formData); 
+
         console.log("Form Data in FormPage:", formData);
-        navigate('/main', { state: { formData } });
+        navigate('/loading'); 
     };
 
 

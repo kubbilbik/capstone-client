@@ -2,16 +2,23 @@ import './Technology.scss';
 import React, { useState, useEffect } from 'react';
 
 import cSharp from '../../assets/images/cSharp.png';
-import cPlus from '../../assets/images/cPlus.png';
+import cPlus from '../../assets/images/cPlus.jpeg';
 import java from '../../assets/images/java.png';
-import kotlin from '../../assets/images/kotlin.png';
+import kotlin from '../../assets/images/kotlin.jpg';
 import php from '../../assets/images/php.png';
 import python from '../../assets/images/python.png';
 import ruby from '../../assets/images/ruby.png';
 import swift from '../../assets/images/swift.png';
-import typescript from '../../assets/images/typscript.png';
+import typescript from '../../assets/images/typescript.png';
 import react from '../../assets/images/react.png';
 import sass from '../../assets/images/sass.png';
+import html from '../../assets/images/html.jpg';
+import css from '../../assets/images/css.png';
+import mongo from '../../assets/images/mongo.png';
+import node from '../../assets/images/node.jpg';
+import mysql from '../../assets/images/mysql.png';
+
+
 
 
 const techImages = {
@@ -26,6 +33,11 @@ const techImages = {
     typescript: typescript,
     react: react,
     sass: sass,
+    html: html,
+    css: css,
+    mongo: mongo,
+    node: node,
+    mysql: mysql,
 };
 
 Technology.defaultProps = {
@@ -83,12 +95,13 @@ export default function Technology({ formData }) {
                     <p>Would you like to take a coffee break?</p>
                     <p>{currentTimeString}</p>
                 </div>
-                <div className='technology-images'>
-                    {renderSelectedTechImages()}
-                </div>
-                <div className='technology-title'>
+                <div className='technology-container'>
                     <h3 className='technology-title-abt'>What Technologies Do I Use?</h3>
+                    <div className='technology-images'>
+                        {renderSelectedTechImages()}
+                    </div>
                 </div>
+                
             </div>
         </>
     )

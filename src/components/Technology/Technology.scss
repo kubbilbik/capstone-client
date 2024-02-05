@@ -1,5 +1,5 @@
 .tech-img{
-    width: 3rem;
+    width: 3.5rem;
 }
 
 .technology{
@@ -13,49 +13,30 @@
 
     &-images{
         display: flex;
-        flex-direction: column-reverse;
-        justify-content: center;
-        align-items: center;
-        gap: 2rem;
+        flex-direction: column;
         flex-wrap: wrap;
+        padding-right: 3rem;
+        gap: 1rem;
     }
 
-    &-title{
+    &-container{
       display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: flex-end;
+      max-height: 90vh;
+    }
+    
 
 
-      &-abt{
+      &-title-abt{
         font-weight: 400;
         font-size: 1rem;
         line-height: .93em;
         writing-mode: vertical-rl;
       }
-    }
+    
     
      
 }
 
-
-@keyframes complexFloatAnimation {
-    0% {
-      transform: translate(0px, 0px) scale(1);
-    }
-    25% {
-      transform: translate(30px, -50px) scale(1.1);
-    }
-    50% {
-      transform: translate(-20px, 20px) scale(1);
-    }
-    75% {
-      transform: translate(-50px, -25px) scale(0.9);
-    }
-    100% {
-      transform: translate(0px, 0px) scale(1);
-    }
-  }
-  
-  .floating {
-    animation: complexFloatAnimation 8s ease-in-out infinite;
-  }
-  
-  

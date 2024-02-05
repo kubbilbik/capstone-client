@@ -1,6 +1,5 @@
 import './Main.scss';
 import Picture from '../../assets/images/kb.png'; 
-import { Link } from 'react-router-dom';
 
 import Email from '../../assets/images/email.png';
 import Linkedin from '../../assets/images/linkedin.png';
@@ -86,21 +85,16 @@ export default function Main({ formData }) {
             <div className='main'>
 
                 <div className='main-links'>
-                    <Link className="main-link" to={email}>
-                        <img className="main-image" 
-                        src={Email} 
-                        alt="Email Icon " />
-                    </Link>
-                    <Link className="main-link" to={linkedin} >
-                        <img className="main-image" 
-                        src={Linkedin} 
-                        alt="Linkedin Icon " />
-                    </Link>
-                    <Link className="main-link" to={git}>
-                        <img className="main-image" 
-                        src={GitHub} 
-                        alt="GitHub Icon " />
-                    </Link>
+                    <a className="main-link" href={`mailto:${email}`} target="_blank" rel="noopener noreferrer">
+                        <img className="main-image" src={Email} alt="Email Icon" />
+                    </a>
+                    <a className="main-link" href={linkedin} target="_blank" rel="noopener noreferrer">
+                        <img className="main-image" src={Linkedin} alt="Linkedin Icon" />
+                    </a>
+                    <a className="main-link" href={git} target="_blank" rel="noopener noreferrer">
+                        <img className="main-image" src={GitHub} alt="GitHub Icon" />
+                    </a>
+
                 </div>
                 <div className='main-container'>
                     
