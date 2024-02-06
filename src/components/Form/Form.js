@@ -62,22 +62,6 @@ export default function Form({ onFormSubmit }){
       }));
     };
 
-
-    // const pollForDescription = async (maxAttempts = 5, interval = 5000) => {
-    //   for (let attempt = 1; attempt <= maxAttempts; attempt++) {
-    //     try {
-    //       const response = await fetch('http://localhost:3001/generate-description');
-    //       if (response.ok) {
-    //         const data = await response.json();
-    //         return data; 
-    //       }
-    //       await new Promise(resolve => setTimeout(resolve, interval));
-    //     } catch (error) {
-    //       console.error('Polling error:', error);
-    //     }
-    //   }
-    //   throw new Error('Description generation timeout');
-    // };
     
 const handleSubmit = async (event) => {
   event.preventDefault();
@@ -117,7 +101,7 @@ const handleSubmit = async (event) => {
         console.error('Error:', error);
         setError('An unexpected error occurred.');
       }
-      navigate('/main', { state: { formData: formData } });
+      navigate('/loading', { state: { formData: formData } });
     } else {
       console.error('Form submission failed');
       setError('Form submission failed.');
