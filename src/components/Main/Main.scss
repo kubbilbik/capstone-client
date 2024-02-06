@@ -18,8 +18,12 @@
         align-items: flex-end;
 
             &-about{
-                font-size: 1rem;
-                line-height: 0.99em;
+                text-align: justify;
+                font-family: "b_c_n",Times,serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 2.5vh;
+    line-height: 1.2em;
                 color: rgba(0, 0, 0, 0.762);
             }
 
@@ -27,35 +31,45 @@
 
         &-second{
             right: 0;
+            margin-left: 20px;
             bottom: 0;
             
                 &-img{
-                    width: 61.9444444444vh;
-                    height: 45.4444444444vh ;            
+                    width: 62vh;
+                    height: 46vh ;            
                 }
         }
     }
-
-}
-
-.main-links{
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-end;
-    gap: 1rem;
-    margin-top: 1rem;
-}
-
-.main-image{
-    width: 2.5rem;
-    color: rgb(62, 95, 58);
     
-}
+    &-links{
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-end;
+        gap: 1rem;
+    }
 
-.main-container-first-about{
-    text-align: justify;
-}
+    &-image{
+        width: 2.5rem;
+        color: rgb(62, 95, 58);
+        
+    }
 
-.main-container-second{
-    margin-left: 20px;
+    &-info{
+        display: flex;
+        flex-direction: row ;
+        margin-top: 1rem;
+        justify-content: space-between;
+        align-items: baseline;
+    
+        &-title{
+            font-family: "b_c_n",Times,serif;
+            font-style: normal;
+            font-weight: 400;
+            font-size: 8vh;
+            line-height: .9375em;
+            letter-spacing: -0.012em;
+        }
+    
+    }
+
 }

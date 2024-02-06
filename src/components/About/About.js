@@ -4,7 +4,6 @@ import React from 'react';
 
 export default function About({ formData }){
     const birthday = formData && formData.birthday ? formData.birthday : "null";
-
     const birthdayParts = birthday.split('.');
     
     return(
@@ -20,10 +19,10 @@ export default function About({ formData }){
                         {index < birthdayParts.length - 1 && <br />}
                     </React.Fragment>
                     ))}
-                    <p className='about-message'>Thank you, mom&dad, for ushering me into this somber world.</p>
+                    <p className='about-message'>Thank you, Mom and Dad, for guiding me into this vibrant world, a place of both shadow and light, where each moment is a gift to be unwrapped.</p>
                 </div>
             </div>
 
         </>
     )
-} 
+}

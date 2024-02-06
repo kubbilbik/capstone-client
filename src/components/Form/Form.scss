@@ -59,14 +59,15 @@
       }
   }
 
-  .form-actions {
-      display: flex;
-      justify-content: flex-end;
-      align-items: flex-end;
-      margin-top: 1rem;
+  &-actions {
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+    margin-top: 1rem;
   }
 
-  button {display: inline-block;
+  button {
+    display: inline-block;
     position: relative;
     z-index: 1;
     width: 7rem;
@@ -127,5 +128,5 @@
         background-color: rgba(#3e5f3a, 0.75);
       }
     }
-}
+  }
 }

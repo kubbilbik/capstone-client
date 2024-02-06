@@ -47,7 +47,7 @@
 .notes-list{
     display: flex;
     margin: 1rem;
-    align-items: flex-end;
+    justify-content: flex-end;
     flex-direction: column;
     gap: 2rem;
     
@@ -56,8 +56,19 @@
 .note{
     display: flex;
     justify-content: flex-end;
-    width: 150%;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 0.35rem;
 
+    &-details-first{
+      font-size: 1rem;
+
+    }
+
+    &-details-second{
+      font-size: 0.70rem;
+      color: #0000006d;
+    }
 }
 
 

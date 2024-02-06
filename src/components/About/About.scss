@@ -21,4 +21,9 @@
         text-overflow: ellipsis; 
         max-width: 100%;
     }
+
+    &-message{
+        font-size: 0.75rem;
+        padding-bottom: 1rem;
+    }
 }

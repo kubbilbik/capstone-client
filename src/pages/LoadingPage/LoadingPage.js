@@ -1,19 +1,11 @@
-import React, { useEffect , useState } from 'react';
+import React, { useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import CircleLoader from "react-spinners/CircleLoader";
 
-// const override: CSSProperties = {
-//   display: "block",
-//   margin: "0 auto",
-//   borderColor: "red",
-// };
 
 const LoadingPage = () => {
 const navigate = useNavigate();
 const location = useLocation(); 
-
-
-
 
 useEffect(() => {
   const timer = setTimeout(() => {

@@ -8,6 +8,7 @@ import Main from "../../components/Main/Main";
 import Technology from "../../components/Technology/Technology";
 
 
+
 export default function MainPage(){
     const location = useLocation();
     const formData = location.state?.formData;
@@ -18,11 +19,11 @@ export default function MainPage(){
     return(
         <>
             <div className="horizontal-scroll-container">
-                
+
                 <About formData={formData} />
                 <Main formData={formData} />
                 <VisitorNotes />
-                    <Technology  formData={formData} />
+                <Technology  formData={formData} />
 
             </div>
         </>

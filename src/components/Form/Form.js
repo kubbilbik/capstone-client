@@ -6,6 +6,7 @@ export default function Form({ onFormSubmit }){
     const navigate = useNavigate();
     const [step, setStep] = useState(0); 
 
+    // State to manage form data as a single object for ease of submission and manipulation
     const [formData, setFormData] = useState({
       name: '',
       birthday: '',
@@ -21,14 +22,11 @@ export default function Form({ onFormSubmit }){
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
 
-
-
-    
-
     const programmingLanguages = [
-      "C+", "C#", "JAVA", "JAVASCRIPT", "KOTLIN", "PHP", "REACT", "RUBY", "SASS", "SWIFT", "TYPESCRIPT", "HTML", "CSS", "MONGODB", "NODEJS", "MYSQL"
+      "C+", "C#", "JAVA", "JAVASCRIPT", "KOTLIN", "PHP", "REACT", "PYTHON", "RUBY", "SASS", "SWIFT", "TYPESCRIPT", "HTML", "CSS", "MONGODB", "NODEJS", "MYSQL"
     ];
 
+    // Function to advance to the next step of the form or submit if it's the last step
     const nextStep = () => {
       if (step < formSteps.length - 1) {
           setStep(step + 1);
@@ -37,6 +35,7 @@ export default function Form({ onFormSubmit }){
       }
     };
 
+    // Handles input changes for text inputs and updates the formData state
     const handleChange = (e) => {
         const { name, value } = e.target;
         setFormData((prevData) => ({
@@ -45,6 +44,7 @@ export default function Form({ onFormSubmit }){
         }));
     };
 
+    // Handles file input changes specifically for the image upload
     const handleFileChange = (e) => {
         setFormData({
           ...formData,
@@ -52,44 +52,55 @@ export default function Form({ onFormSubmit }){
         });
     };
 
+    // Handles changes for checkbox inputs to manage the technologies array
     const handleCheckboxChange = (e) => {
       const { value, checked } = e.target;
       setFormData(prevData => ({
           ...prevData,
           technologies: checked
-              ? [...prevData.technologies, value]
+              ? [...prevData.technologies, value] // Add technology if checked
               : prevData.technologies.filter(tech => tech !== value),
       }));
     };
 
-    
-const handleSubmit = async (event) => {
+ 
+  
+  // Asynchronous function to handle form submission
+  const handleSubmit = async (event) => {
   event.preventDefault();
   setLoading(true);
   setError('');
+  
 
   const formDataToSend = new FormData();
+  // Append all formData keys except for 'technologies' and 'image' directly
   Object.keys(formData).forEach(key => {
     if (key !== 'technologies' && key !== 'image') {
       formDataToSend.append(key, formData[key]);
     }
   });
 
+  // Join technologies array into a string to append
   if (formData.technologies.length > 0) {
     formDataToSend.append('technologies', formData.technologies.join(','));
   }
 
+  // Append image file if present
   if (formData.image) {
     formDataToSend.append('image', formData.image);
   }
 
+
+
   try {
+    // Attempt to submit the form data to a specified endpoint
     const formResponse = await fetch('http://localhost:3001/submit-form', {
       method: 'POST',
-      body: formDataToSend, // FormData is directly usable with fetch to send multipart/form-data
+      body: formDataToSend, 
     });
 
     if (formResponse.ok) {
+      // Handle successful form submission here
       const responseJson = await formResponse.json();
       console.log('Form submission successful', responseJson);
       try {
@@ -97,6 +108,7 @@ const handleSubmit = async (event) => {
           method: 'POST',
           body: formDataToSend.description,
         })
+        console.log(gptResponse)
       } catch (error) {
         console.error('Error:', error);
         setError('An unexpected error occurred.');
@@ -115,10 +127,6 @@ const handleSubmit = async (event) => {
 };
 
     
-
-
-
-
     const formSteps = [
 
         <div className="form__input">

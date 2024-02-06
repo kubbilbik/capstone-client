@@ -10,18 +10,23 @@ import React, { useState ,useEffect } from 'react';
 
 
 export default function Main({ formData }) {
+    const name = formData && formData.name ? formData.name : "null";
     const email = formData && formData.email ? formData.email : "null";
     const linkedin = formData && formData.linkedin ? formData.linkedin : "null";
     const git = formData && formData.git ? formData.git : "null";
+
    
-    const description = formData && formData.description ? formData.description : "null";
     const imageSrc = formData && formData.image && (formData.image instanceof Blob || formData.image instanceof File) 
                     ? URL.createObjectURL(formData.image) 
                     : Picture;
 
     const [responseContent, setResponseContent] = useState('');
+
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
+    console.log(loading)
+    console.log(error)
+
 
     useEffect(() => {
         const fetchData = async () => {
@@ -46,7 +51,6 @@ export default function Main({ formData }) {
     
         fetchData();
     }, []);
-    
     
     
     useEffect(() => {
@@ -83,19 +87,22 @@ export default function Main({ formData }) {
     return (
         <>
             <div className='main'>
+                <div className='main-info'>
+                    <h1 className='main-info-title'>{name}</h1>
+                    <div className='main-links'>
+                        <a className="main-link" href={`mailto:${email}`} target="_blank" rel="noopener noreferrer">
+                            <img className="main-image" src={Email} alt="Email Icon" />
+                        </a>
+                        <a className="main-link" href={linkedin} target="_blank" rel="noopener noreferrer">
+                            <img className="main-image" src={Linkedin} alt="Linkedin Icon" />
+                        </a>
+                        <a className="main-link" href={git} target="_blank" rel="noopener noreferrer">
+                            <img className="main-image" src={GitHub} alt="GitHub Icon" />
+                        </a>
 
-                <div className='main-links'>
-                    <a className="main-link" href={`mailto:${email}`} target="_blank" rel="noopener noreferrer">
-                        <img className="main-image" src={Email} alt="Email Icon" />
-                    </a>
-                    <a className="main-link" href={linkedin} target="_blank" rel="noopener noreferrer">
-                        <img className="main-image" src={Linkedin} alt="Linkedin Icon" />
-                    </a>
-                    <a className="main-link" href={git} target="_blank" rel="noopener noreferrer">
-                        <img className="main-image" src={GitHub} alt="GitHub Icon" />
-                    </a>
-
+                    </div>
                 </div>
+
                 <div className='main-container'>
                     
                     <div className='main-container-first'>

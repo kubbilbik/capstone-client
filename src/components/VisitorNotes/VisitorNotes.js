@@ -1,33 +1,48 @@
 import React, { useState } from 'react';
 import './VisitorNotes.scss'; 
-
 import { ReactComponent as VisitorBackgroundSVG } from '../../assets/images/visitorbackground.svg';
 
-
 function VisitorNotes() {
-  const [notes, setNotes] = useState([]); // This will hold an array of notes
-  const [input, setInput] = useState(''); // This will hold the current value of the text input
+  const [notes, setNotes] = useState([]); 
+  const [input, setInput] = useState(''); 
+
+  const getTodaysDate = () => {
+    const today = new Date();
+    return today.toLocaleDateString("en-US"); 
+  };
 
   const handleInputChange = (e) => {
     setInput(e.target.value);
   };
-
+  const handleKeyPress = (e) => {
+    if (e.key === 'Enter') {
+      handleSendClick(); 
+    }
+  };
   const handleSendClick = () => {
     if (input.trim()) {
-      setNotes([...notes, input.trim()]);
+      const visitorLocation = "Toronto";
+      const todaysDate = getTodaysDate();
+
+      const noteObject = {
+        note: input.trim(),
+        details: `Visitor from ${visitorLocation} - ${todaysDate}`
+      };
+      
+      setNotes([...notes, noteObject]);
       setInput(''); 
     }
   };
 
   return (
     <div className="visitor-notes-container">
-    <VisitorBackgroundSVG className="background-svg" />
-
+      <VisitorBackgroundSVG className="background-svg" />
 
       <div className="notes-list">
-        {notes.map((note, index) => (
+        {notes.map((noteObj, index) => (
           <div key={index} className="note">
-            {note}
+            <p className="note-details-first">{noteObj.note}</p> 
+            <p className="note-details-second">{noteObj.details}</p> 
           </div>
         ))}
       </div>
@@ -37,14 +52,13 @@ function VisitorNotes() {
           type="text"
           value={input}
           onChange={handleInputChange}
+          onKeyPress={handleKeyPress}
           placeholder="Tell me something"
         />
-        <button className='input-area-btn' onClick={handleSendClick}>Send</button>
+        <button className='input-area-btn' onClick={handleSendClick} >Send</button>
       </div>
 
-
     </div>
-    
   );
 }
 
