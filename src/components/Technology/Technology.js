@@ -78,7 +78,7 @@ export default function Technology({ formData }) {
         return technologiesArray.map((tech) => {
           const imageSrc = techImages[tech];
           return imageSrc ? (
-            <div key={tech} className="floating">
+            <div key={tech}>
               <img className='tech-img' src={imageSrc} alt={`${tech} programming language logo`}
  />
             </div>
